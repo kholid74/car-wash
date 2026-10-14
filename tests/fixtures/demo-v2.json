@@ -1,0 +1,295 @@
+{
+  "version": 2,
+  "nextQueue": 42,
+  "customers": [
+    {
+      "id": "c-0",
+      "name": "Andi Pratama",
+      "phone": "0812-3456-7890"
+    },
+    {
+      "id": "c-1",
+      "name": "Siti Rahma",
+      "phone": "0813-0000-1001"
+    },
+    {
+      "id": "c-3",
+      "name": "Dimas Prakoso",
+      "phone": "0813-0000-1003"
+    }
+  ],
+  "vehicles": [
+    {
+      "id": "v-0",
+      "customerId": "c-0",
+      "plate": "B 1234 ABC",
+      "brand": "Toyota",
+      "model": "Fortuner",
+      "color": "Putih",
+      "type": "SUV"
+    },
+    {
+      "id": "v-1",
+      "customerId": "c-1",
+      "plate": "B 5678 XYZ",
+      "brand": "Toyota",
+      "model": "Avanza",
+      "color": "Silver",
+      "type": "MPV"
+    },
+    {
+      "id": "v-3",
+      "customerId": "c-3",
+      "plate": "B 7712 DEF",
+      "brand": "Toyota",
+      "model": "Innova Zenix",
+      "color": "Hitam",
+      "type": "MPV"
+    }
+  ],
+  "services": [
+    {
+      "id": "basic",
+      "name": "Basic Wash",
+      "price": 60000,
+      "description": "Cuci eksterior, pembersihan ban, dan pengeringan.",
+      "duration": 25,
+      "active": true
+    },
+    {
+      "id": "premium",
+      "name": "Premium Wash",
+      "price": 120000,
+      "description": "Cuci eksterior, vakum interior, pembersihan ban, dan pengeringan.",
+      "duration": 45,
+      "active": true
+    },
+    {
+      "id": "interior",
+      "name": "Interior Cleaning",
+      "price": 65000,
+      "description": "Pembersihan dashboard, jok, karpet, dan bagasi.",
+      "duration": 30,
+      "active": true
+    },
+    {
+      "id": "detailing",
+      "name": "Detailing",
+      "price": 250000,
+      "description": "Perawatan menyeluruh untuk kilau dan perlindungan body.",
+      "duration": 90,
+      "active": true
+    }
+  ],
+  "orders": [
+    {
+      "id": "wo-01",
+      "vehicleId": "v-1",
+      "queue": "A-001",
+      "status": "WASHING",
+      "createdAt": "2026-10-13T04:28:00+07:00",
+      "inspection": {
+        "dirt": "Sedang",
+        "areas": [
+          "Body",
+          "Kaca"
+        ],
+        "notes": "Kondisi kendaraan dicatat sebelum pencucian.",
+        "photos": []
+      },
+      "items": [
+        {
+          "serviceId": "premium",
+          "name": "Premium Wash",
+          "price": 120000,
+          "quantity": 1
+        }
+      ],
+      "discount": 0,
+      "manualTotal": null,
+      "notes": "",
+      "bay": 1,
+      "timeline": [
+        {
+          "label": "Check-in kendaraan",
+          "at": "2026-10-13T04:28:00+07:00"
+        },
+        {
+          "label": "Masuk antrean",
+          "at": "2026-10-13T04:32:00+07:00"
+        },
+        {
+          "label": "Mulai dicuci",
+          "at": "2026-10-13T04:46:00+07:00"
+        }
+      ],
+      "branchId": "main",
+      "employeeId": null
+    },
+    {
+      "id": "wo-03",
+      "vehicleId": "v-3",
+      "queue": "A-003",
+      "status": "QUEUED",
+      "createdAt": "2026-10-13T04:55:00+07:00",
+      "inspection": {
+        "dirt": "Sedang",
+        "areas": [
+          "Body",
+          "Kaca",
+          "Interior",
+          "Jok"
+        ],
+        "notes": "Kondisi kendaraan dicatat sebelum pencucian.",
+        "photos": []
+      },
+      "items": [
+        {
+          "serviceId": "premium",
+          "name": "Premium Wash",
+          "price": 120000,
+          "quantity": 1
+        },
+        {
+          "serviceId": "interior",
+          "name": "Interior Cleaning",
+          "price": 65000,
+          "quantity": 1
+        }
+      ],
+      "discount": 0,
+      "manualTotal": null,
+      "notes": "",
+      "bay": null,
+      "timeline": [
+        {
+          "label": "Check-in kendaraan",
+          "at": "2026-10-13T04:55:00+07:00"
+        },
+        {
+          "label": "Masuk antrean",
+          "at": "2026-10-13T04:59:00+07:00"
+        }
+      ],
+      "branchId": "main",
+      "employeeId": null
+    },
+    {
+      "id": "hist-3",
+      "vehicleId": "v-0",
+      "queue": "A-017",
+      "status": "COMPLETED",
+      "createdAt": "2026-09-01T10:05:00+07:00",
+      "inspection": {
+        "dirt": "Berat",
+        "areas": [
+          "Body",
+          "Kaca"
+        ],
+        "notes": "Penyesuaian harga disetujui pelanggan untuk perawatan ekstra kolong.",
+        "photos": [
+          "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=="
+        ]
+      },
+      "items": [
+        {
+          "serviceId": "detailing",
+          "name": "Detailing",
+          "price": 250000,
+          "quantity": 1
+        }
+      ],
+      "discount": 0,
+      "manualTotal": 290000,
+      "notes": "",
+      "bay": 3,
+      "timeline": [
+        {
+          "label": "Check-in kendaraan",
+          "at": "2026-09-01T10:05:00+07:00"
+        },
+        {
+          "label": "Masuk antrean",
+          "at": "2026-09-01T10:09:00+07:00"
+        },
+        {
+          "label": "Mulai dicuci",
+          "at": "2026-09-01T10:23:00+07:00"
+        },
+        {
+          "label": "Pemeriksaan kualitas",
+          "at": "2026-09-01T10:43:00+07:00"
+        },
+        {
+          "label": "Siap diambil",
+          "at": "2026-09-01T10:50:00+07:00"
+        },
+        {
+          "label": "Pembayaran selesai",
+          "at": "2026-09-01T11:50:00+07:00"
+        }
+      ],
+      "branchId": "main",
+      "employeeId": null
+    }
+  ],
+  "transactions": [
+    {
+      "id": "TRX-20260901-0001",
+      "workOrderId": "hist-3",
+      "paidAt": "2026-09-01T11:50:00+07:00",
+      "method": "Transfer Bank",
+      "amount": 290000,
+      "received": 290000
+    }
+  ],
+  "settings": {
+    "identity": "masked"
+  },
+  "branches": [
+    {
+      "id": "main",
+      "name": "Usaha lama yang disimpan",
+      "address": "Jl. Contoh No. 123, Tangerang Selatan",
+      "phone": "0812-0000-0000",
+      "prefix": "A",
+      "bays": 3,
+      "opensAt": "08:00",
+      "closesAt": "17:00"
+    },
+    {
+      "id": "bsd",
+      "name": "KL Autocare BSD · Demo",
+      "address": "Jl. Contoh BSD No. 8, Tangerang Selatan",
+      "phone": "0812-0000-0001",
+      "prefix": "B",
+      "bays": 2,
+      "opensAt": "08:00",
+      "closesAt": "17:00"
+    }
+  ],
+  "activeBranchId": "main",
+  "employees": [
+    {
+      "id": "staff-1",
+      "branchId": "main",
+      "name": "Raka Pratama",
+      "role": "Wash specialist",
+      "active": true
+    },
+    {
+      "id": "staff-2",
+      "branchId": "main",
+      "name": "Dewi Laras",
+      "role": "Detailing & QC",
+      "active": true
+    },
+    {
+      "id": "staff-3",
+      "branchId": "bsd",
+      "name": "Fajar Saputra",
+      "role": "Wash specialist",
+      "active": true
+    }
+  ]
+}

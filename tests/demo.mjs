@@ -13,10 +13,11 @@
 import { chromium } from "@playwright/test";
 
 const BASE = process.env.BASE_URL ?? "http://localhost:3000";
-/** PNG 1×1 transparan, dipakai untuk menguji pratinjau foto inspeksi. */
+/** PNG 1Ã—1 transparan, dipakai untuk menguji pratinjau foto inspeksi. */
 const PNG_1PX = Buffer.from("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==", "base64");
 const results = [];
 let failures = 0;
+let initialRevenue = 0;
 
 async function step(name, fn) {
   try {
@@ -47,13 +48,19 @@ page.on("pageerror", error => consoleErrors.push(`pageerror: ${error.message}`))
 await page.goto(BASE, { waitUntil: "networkidle" });
 await page.evaluate(() => localStorage.clear());
 await page.reload({ waitUntil: "networkidle" });
+await page.goto(`${BASE}/admin`, { waitUntil: "networkidle" });
+await page.getByLabel("Email", { exact: true }).fill("admin@klautocare.demo");
+await page.getByLabel("Kata sandi", { exact: true }).fill("demo123");
+await page.getByRole("button", { name: "Masuk ke dashboard" }).click();
+await page.getByRole("heading", { name: "Ringkasan operasional" }).waitFor();
 
 console.log(`\nUji alur demo pada ${BASE}\n`);
 
 await step("1. Dashboard menampilkan operasional hari ini", async () => {
-  await page.goto(BASE, { waitUntil: "networkidle" });
-  await page.getByRole("heading", { name: "Selamat datang", exact: false }).waitFor();
-  check(await page.getByText("Kendaraan Hari Ini").isVisible(), "Metrik 'Kendaraan Hari Ini' tidak tampil");
+  await page.goto(`${BASE}/admin`, { waitUntil: "networkidle" });
+  await page.getByRole("heading", { name: "Ringkasan operasional" }).waitFor();
+  check(await page.getByText("Pendapatan Hari Ini").isVisible(), "Metrik pendapatan tidak tampil");
+  initialRevenue = Number((await page.locator(".metric-card").filter({ hasText: "Pendapatan Hari Ini" }).locator(":scope > strong").innerText()).replace(/\D/g, ""));
   check(await page.getByText("Antrean operasional").isVisible(), "Panel antrean tidak tampil");
   const queue = page.locator(".dashboard-queue");
   check(await queue.locator(".dashboard-queue-row").first().isVisible(), "Baris antrean tidak tampil di dashboard");
@@ -174,7 +181,7 @@ await step("12. Bayar Rp185.000 dengan QRIS", async () => {
   check(await page.getByText("Rp185.000").first().isVisible(), "Total pembayaran tidak tampil");
   await page.getByRole("button", { name: /Proses Pembayaran/ }).click();
   await page.getByRole("heading", { name: "Pembayaran Berhasil" }).waitFor();
-  check(await page.getByText(/TRX-20261002-\d{4}/).first().isVisible(), "Nomor transaksi tidak tampil");
+  check(await page.getByText(/TRX-\d{8}-\d{4}/).first().isVisible(), "Nomor transaksi tidak tampil");
 });
 
 await step("13. Struk dapat dibuka", async () => {
@@ -202,6 +209,12 @@ await step("14. Riwayat kendaraan B 1234 ABC bertambah menjadi 6 kunjungan", asy
   await page.getByRole("tab", { name: "Riwayat Inspeksi" }).click();
   await page.locator(".inspection-history").waitFor();
   check(await page.locator(".inspection-history img").count() > 0, "Foto inspeksi tidak tersimpan pada riwayat");
+});
+
+await step("14b. Pembayaran memperbarui pendapatan dashboard", async () => {
+  await page.goto(`${BASE}/admin`, { waitUntil: "networkidle" });
+  const revenue = Number((await page.locator(".metric-card").filter({ hasText: "Pendapatan Hari Ini" }).locator(":scope > strong").innerText()).replace(/\D/g, ""));
+  check(revenue === initialRevenue + 185000, "Pendapatan dashboard belum bertambah Rp185.000");
 });
 
 await step("15. Reset Demo mengembalikan data awal", async () => {

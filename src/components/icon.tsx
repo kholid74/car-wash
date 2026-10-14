@@ -1,0 +1,73 @@
+import type { CSSProperties, ReactNode } from "react";
+
+export type IconComponent = (props: { size?: number; color?: string; fill?: boolean | string; className?: string; strokeWidth?: number }) => ReactNode;
+type IconProps = { name: string; size?: number; color?: string; fill?: boolean | string; label?: string; className?: string; style?: CSSProperties; strokeWidth?: number };
+
+export function Icon({ name, size = 20, color = "currentColor", fill = false, label, className = "", style }: IconProps) {
+  return <span className={`material-symbol ${className}`} aria-hidden={label ? undefined : true} aria-label={label} role={label ? "img" : undefined} style={{ fontSize: size, color, fontVariationSettings: `"FILL" ${fill ? 1 : 0}, "wght" 400, "GRAD" 0, "opsz" ${size}`, ...style }}>{name}</span>;
+}
+
+const symbol = (name: string) => {
+  const MaterialSymbol = (props: Omit<IconProps, "name">) => <Icon name={name} {...props} />;
+  MaterialSymbol.displayName = `MaterialSymbol(${name})`;
+  return MaterialSymbol;
+};
+export const ArrowDown = symbol("arrow_downward");
+export const ArrowDownLeft = symbol("subdirectory_arrow_left");
+export const ArrowLeft = symbol("arrow_back");
+export const ArrowRight = symbol("arrow_forward");
+export const ArrowUpRight = symbol("north_east");
+export const BadgeCheck = symbol("verified");
+export const BadgePercent = symbol("percent");
+export const Banknote = symbol("payments");
+export const BarChart3 = symbol("bar_chart");
+export const Bell = symbol("notifications");
+export const Building2 = symbol("domain");
+export const CalendarDays = symbol("calendar_month");
+export const Camera = symbol("photo_camera");
+export const CarFront = symbol("directions_car");
+export const Check = symbol("check");
+export const CheckCheck = symbol("done_all");
+export const CircleCheck = symbol("check_circle");
+export const ClipboardCheck = symbol("fact_check");
+export const ClipboardList = symbol("assignment");
+export const Clock3 = symbol("schedule");
+export const CreditCard = symbol("credit_card");
+export const Droplets = symbol("local_car_wash");
+export const Expand = symbol("open_in_full");
+export const ExternalLink = symbol("open_in_new");
+export const Eye = symbol("visibility");
+export const Globe = symbol("language");
+export const HelpCircle = symbol("help");
+export const Info = symbol("info");
+export const LayoutDashboard = symbol("dashboard");
+export const ListOrdered = symbol("format_list_numbered");
+export const LogOut = symbol("logout");
+export const MapPin = symbol("location_on");
+export const Menu = symbol("menu");
+export const MessageCircle = symbol("chat");
+export const MessageSquare = symbol("chat_bubble");
+export const Monitor = symbol("desktop_windows");
+export const Package = symbol("inventory_2");
+export const Pencil = symbol("edit");
+export const Plus = symbol("add");
+export const Printer = symbol("print");
+export const QrCode = symbol("qr_code_2");
+export const ReceiptText = symbol("receipt_long");
+export const RotateCcw = symbol("replay");
+export const Save = symbol("save");
+export const Search = symbol("search");
+export const Settings = symbol("settings");
+export const Shield = symbol("security");
+export const ShieldCheck = symbol("verified_user");
+export const SlidersHorizontal = symbol("tune");
+export const Sparkles = symbol("auto_awesome");
+export const Star = symbol("star");
+export const Tag = symbol("sell");
+export const TrendingUp = symbol("trending_up");
+export const User = symbol("person");
+export const Users = symbol("groups");
+export const Wallet = symbol("account_balance_wallet");
+export const Wind = symbol("air");
+export const X = symbol("close");
+export const XCircle = symbol("cancel");

@@ -1,4 +1,5 @@
-import { dayAt, emptyInspection, jakartaMinutes, minuteOfDay, type DemoState, type LineItem, type PaymentMethod, type Service, type Status, type WorkOrder } from "./domain.ts";
+import { dayAt, emptyInspection, jakartaMinutes, minuteOfDay, type DemoState, type LineItem, type PaymentMethod, type Service, type Status } from "./domain.ts";
+import { migrateDemoState, type LegacyWorkOrder } from "./migration.ts";
 
 /**
  * Data contoh untuk prototype.
@@ -72,7 +73,7 @@ export function seed(): DemoState {
     return events;
   };
 
-  const build = (seedling: Seedling): WorkOrder => ({
+  const build = (seedling: Seedling): LegacyWorkOrder => ({
     id: seedling.id,
     vehicleId: seedling.vehicleId,
     queue: seedling.queue,
@@ -169,7 +170,7 @@ export function seed(): DemoState {
       };
     });
 
-  return {
+  const demo = migrateDemoState({
     version: 1,
     nextQueue: 12,
     customers: people.map((person, i) => ({ id: `c-${i}`, name: person[0], phone: person[1] })),
@@ -177,6 +178,7 @@ export function seed(): DemoState {
     services,
     orders,
     transactions,
-    settings: { name: "Kalsara Car Wash Demo", address: "Jl. Contoh No. 123, Tangerang Selatan", phone: "0812-0000-0000", prefix: "A", bays: 3, identity: "masked" },
-  };
+    settings: { name: "KL Autocare", address: "Jl. Contoh No. 123, Tangerang Selatan", phone: "0812-0000-0000", prefix: "A", bays: 3, identity: "masked" },
+  });
+  return { ...demo, orders: demo.orders.map((order, index) => order.branchId === "main" && order.status === "COMPLETED" ? { ...order, employeeId: index % 3 === 0 ? "staff-2" : "staff-1" } : order) };
 }
